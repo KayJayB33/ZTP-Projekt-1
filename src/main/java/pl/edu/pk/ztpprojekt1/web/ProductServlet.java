@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import pl.edu.pk.ztpprojekt1.dao.ProductDao;
 import pl.edu.pk.ztpprojekt1.model.Product;
 import pl.edu.pk.ztpprojekt1.service.product.ProductService;
+import pl.edu.pk.ztpprojekt1.service.product.ProductServiceFactory;
 import pl.edu.pk.ztpprojekt1.service.product.ProductValidator;
 import pl.edu.pk.ztpprojekt1.util.JsonFileHandler;
 
@@ -21,22 +22,11 @@ import java.util.List;
 
 @WebServlet(urlPatterns = {"/products", "/products/create", "/products/update", "/products/delete"})
 public class ProductServlet extends HttpServlet {
-    private static final String PRODUCTS_JSON_FILEPATH = "data/products.json";
-    ProductService productService;
-    private static final Logger logger = LogManager.getLogger(ProductServlet.class);
+    private ProductService productService;
 
     @Override
     public void init() {
-        File productsJsonFile = new File(PRODUCTS_JSON_FILEPATH);
-        try {
-            JsonFileHandler.createFileIfNotExists(productsJsonFile);
-        } catch (IOException e) {
-            logger.error("Error during file initialization: " + e.getMessage(), e);
-            throw new RuntimeException(e);
-        }
-
-        ProductDao productDao = new ProductDao(productsJsonFile, new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT));
-        productService = new ProductService(productDao, new ProductValidator());
+        productService = ProductServiceFactory.getInstance();
     }
 
     @Override

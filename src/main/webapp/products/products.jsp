@@ -11,7 +11,7 @@
     <header>
         <nav class="navbar navbar-expand-md navbar-dark" style="background-color: dodgerblue">
             <div>
-                <a href="https://www.javaguides.net" class="navbar-brand">System Zarządzania Zamówieniami i Produktami</a>
+                <a class="navbar-brand">System Zarządzania Zamówieniami i Produktami</a>
             </div>
 
             <ul class="navbar-nav">
@@ -62,6 +62,7 @@
                             </td>
                             <td>
                                 <a href="<%=request.getContextPath()%>/products/update?id=<c:out value='${product.id}' />">Edytuj</a>
+                                <br/>
                                 <a href="<%=request.getContextPath()%>/products/delete?id=<c:out value='${product.id}' />">Usuń</a>
                             </td>
                         </tr>

@@ -9,7 +9,7 @@
         <header>
             <nav class="navbar navbar-expand-md navbar-dark" style="background-color: dodgerblue">
                 <div>
-                    <a href="https://www.javaguides.net" class="navbar-brand">System Zarządzania Zamówieniami i Produktami</a>
+                    <a class="navbar-brand">System Zarządzania Zamówieniami i Produktami</a>
                 </div>
 
                 <ul class="navbar-nav">
@@ -44,7 +44,7 @@
                         </c:if>
 
                         <fieldset class="form-group">
-                            <label>Nazwa</label> <input type="text" value="<c:out value='${product.name}' />" class="form-control" name="name" required="required">
+                            <label>Adresat</label> <input type="text" value="<c:out value='${product.name}' />" class="form-control" name="name" required="required">
                         </fieldset>
 
                         <fieldset class="form-group">
@@ -67,21 +67,3 @@
         </div>
     </body>
 </html>
-
-<style>
-    .currency-wrap{
-        position:relative;
-    }
-
-    .currency-code{
-        position:absolute;
-        left:8px;
-        top:10px;
-    }
-
-    .price{
-        padding:10px 20px;
-        border:solid 1px #ccc;
-        border-radius:5px;
-    }
-</style>

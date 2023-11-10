@@ -1,18 +1,31 @@
 package pl.edu.pk.ztpprojekt1.service.order;
 
 import pl.edu.pk.ztpprojekt1.dao.OrderDao;
+import pl.edu.pk.ztpprojekt1.dao.ProductDao;
+import pl.edu.pk.ztpprojekt1.model.DeliveryStatus;
 import pl.edu.pk.ztpprojekt1.model.Order;
+import pl.edu.pk.ztpprojekt1.model.Product;
+import pl.edu.pk.ztpprojekt1.service.delivery.DeliveryStrategy;
+import pl.edu.pk.ztpprojekt1.service.delivery.PostDelivery;
+import pl.edu.pk.ztpprojekt1.service.product.ProductService;
+import pl.edu.pk.ztpprojekt1.service.product.ProductServiceFactory;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class OrderService {
 
     private final OrderDao orderDao;
+    private final ProductService productService;
     private final OrderValidator orderValidator;
 
     public OrderService(OrderDao orderDao, OrderValidator orderValidator) {
         this.orderDao = orderDao;
+        this.productService = ProductServiceFactory.getInstance();
         this.orderValidator = orderValidator;
     }
 
@@ -24,17 +37,38 @@ public class OrderService {
         return orderDao.getAll();
     }
 
-    public void save(String[] params) {
+    public void save(String[] params, Map<Long, String> quantitiesParams) {
         Order order = orderValidator.validate(params);
+        Map<Long, Integer> quantities = new HashMap<>(quantitiesParams.size());
+        for (Map.Entry<Long, String> param : quantitiesParams.entrySet()) {
+            Long id = param.getKey();
+            Integer quantity = Integer.parseInt(param.getValue());
+            if(quantity < 0 || quantity > productService.get(id).getAvailableQuantity()) {
+                throw new IllegalArgumentException("product quantity must be positive number not bigger than available quantity");
+            }
+            quantities.put(param.getKey(), quantity);
+        }
+        order.setOrderedProducts(quantities);
+        order.setPrice(calculateOrderPrice(quantities));
         orderDao.save(order);
     }
 
-    public void update(UUID uuid, String[] params) {
-        Order order = orderValidator.validate(params);
-        orderDao.update(uuid, order);
+    private BigDecimal calculateOrderPrice(Map<Long, Integer> quantities) {
+        BigDecimal price = BigDecimal.ZERO;
+        for(Map.Entry<Long, Integer> quantity : quantities.entrySet()) {
+            if (quantity.getValue().equals(0)) {
+                continue;
+            }
+            BigDecimal productPrice = productService.get(quantity.getKey()).getPrice();
+            price = price.add(productPrice.multiply(BigDecimal.valueOf(quantity.getValue())));
+        }
+        return price;
     }
 
-    public Order delete(UUID uuid) {
-        return orderDao.delete(uuid);
+    public void send(String param) {
+        UUID uuid = UUID.fromString(param);
+        Order order = get(uuid);
+        order.getDeliveryStrategy().send();
+        orderDao.update(uuid, order);
     }
 }

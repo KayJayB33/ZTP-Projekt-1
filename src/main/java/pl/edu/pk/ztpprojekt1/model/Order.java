@@ -18,26 +18,22 @@ public class Order {
     private final UUID uuid;
     private final Instant createdOn;
     @JsonProperty("ordered_products")
-    @JsonSerialize(keyUsing = MapSerializer.class)
     private Map<Long, Integer> orderedProducts;
     @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal price;
     @JsonProperty("delivery_strategy")
     private DeliveryStrategy deliveryStrategy;
-    @JsonProperty("delivery_status")
-    private DeliveryStatus deliveryStatus;
 
     public Order() {
         this.uuid = UUID.randomUUID();
         this.createdOn = Instant.now();
     }
 
-    public Order(Map<Long, Integer> orderedProducts, BigDecimal price, DeliveryStrategy deliveryStrategy, DeliveryStatus deliveryStatus) {
+    public Order(Map<Long, Integer> orderedProducts, BigDecimal price, DeliveryStrategy deliveryStrategy) {
         this();
         this.orderedProducts = orderedProducts;
         this.price = price;
         this.deliveryStrategy = deliveryStrategy;
-        this.deliveryStatus = deliveryStatus;
     }
 
     public UUID getUuid() {
@@ -68,14 +64,6 @@ public class Order {
         this.deliveryStrategy = deliveryStrategy;
     }
 
-    public DeliveryStatus getDeliveryStatus() {
-        return deliveryStatus;
-    }
-
-    public void setDeliveryStatus(DeliveryStatus deliveryStatus) {
-        this.deliveryStatus = deliveryStatus;
-    }
-
     public Instant getCreatedOn() {
         return createdOn;
     }
@@ -85,12 +73,12 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(uuid, order.uuid) && Objects.equals(createdOn, order.createdOn) && Objects.equals(orderedProducts, order.orderedProducts) && Objects.equals(price, order.price) && Objects.equals(deliveryStrategy, order.deliveryStrategy) && deliveryStatus == order.deliveryStatus;
+        return Objects.equals(uuid, order.uuid) && Objects.equals(createdOn, order.createdOn) && Objects.equals(orderedProducts, order.orderedProducts) && Objects.equals(price, order.price) && Objects.equals(deliveryStrategy, order.deliveryStrategy);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, createdOn, orderedProducts, price, deliveryStrategy, deliveryStatus);
+        return Objects.hash(uuid, createdOn, orderedProducts, price, deliveryStrategy);
     }
 
     @Override
@@ -101,7 +89,6 @@ public class Order {
                 ", orderedProducts=" + orderedProducts +
                 ", price=" + price +
                 ", deliveryStrategy=" + deliveryStrategy +
-                ", deliveryStatus=" + deliveryStatus +
                 '}';
     }
 }

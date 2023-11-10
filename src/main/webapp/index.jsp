@@ -9,7 +9,7 @@
         <header>
             <nav class="navbar navbar-expand-md navbar-dark" style="background-color: dodgerblue">
                 <div>
-                    <a href="https://www.javaguides.net" class="navbar-brand">System Zarządzania Zamówieniami i Produktami</a>
+                    <a class="navbar-brand">System Zarządzania Zamówieniami i Produktami</a>
                 </div>
 
                 <ul class="navbar-nav">

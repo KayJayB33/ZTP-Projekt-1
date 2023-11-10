@@ -8,9 +8,9 @@ import java.util.List;
 
 public class ProductService {
     private final ProductDao productDao;
-    private final Validator<Product> validator;
+    private final ProductValidator validator;
 
-    public ProductService(ProductDao productDao, Validator<Product> validator) {
+    public ProductService(ProductDao productDao, ProductValidator validator) {
         this.productDao = productDao;
         this.validator = validator;
     }

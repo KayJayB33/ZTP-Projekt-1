@@ -1,5 +1,8 @@
 package pl.edu.pk.ztpprojekt1.service.delivery;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import pl.edu.pk.ztpprojekt1.model.DeliveryStatus;
+
 import java.util.Objects;
 
 /**
@@ -8,7 +11,21 @@ import java.util.Objects;
 public class ParcelLockerDelivery implements DeliveryStrategy {
     private String addressee;
     private String address;
+    @JsonProperty("parcel_locker_id")
     private String parcelLockerId;
+    @JsonProperty("delivery_status")
+    private DeliveryStatus deliveryStatus;
+
+    public ParcelLockerDelivery(String addressee, String address, String parcelLockerId) {
+        this();
+        this.addressee = addressee;
+        this.address = address;
+        this.parcelLockerId = parcelLockerId;
+    }
+
+    public ParcelLockerDelivery() {
+        this.deliveryStatus = DeliveryStatus.IN_PACKAGING;
+    }
 
     public String getAddressee() {
         return addressee;
@@ -34,6 +51,15 @@ public class ParcelLockerDelivery implements DeliveryStrategy {
         this.parcelLockerId = parcelLockerId;
     }
 
+    @Override
+    public DeliveryStatus getDeliveryStatus() {
+        return deliveryStatus;
+    }
+
+    public void setDeliveryStatus(DeliveryStatus deliveryStatus) {
+        this.deliveryStatus = deliveryStatus;
+    }
+
     /**
      * Wysyła zamówienie do paczkomatu
      * @return true jeśli zamówienie zostało wysłane pomyślnie
@@ -41,6 +67,7 @@ public class ParcelLockerDelivery implements DeliveryStrategy {
     @Override
     public boolean send() {
         // wysyłanie danych do API systemu obsługi paczkomatu w celu zarejestrowania przesyłki
+        deliveryStatus = DeliveryStatus.SENT;
         return true;
     }
 
