@@ -44,7 +44,7 @@
                         </c:if>
 
                         <fieldset class="form-group">
-                            <label>Adresat</label> <input type="text" value="<c:out value='${product.name}' />" class="form-control" name="name" required="required">
+                            <label>Nazwa</label> <input type="text" value="<c:out value='${product.name}' />" class="form-control" name="name" required="required">
                         </fieldset>
 
                         <fieldset class="form-group">
