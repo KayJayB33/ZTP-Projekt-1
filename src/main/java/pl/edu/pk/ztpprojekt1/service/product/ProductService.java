@@ -5,6 +5,8 @@ import pl.edu.pk.ztpprojekt1.model.Product;
 import pl.edu.pk.ztpprojekt1.service.validator.Validator;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class ProductService {
     private final ProductDao productDao;
@@ -35,5 +37,18 @@ public class ProductService {
 
     public Product delete(long id) {
         return productDao.delete(id);
+    }
+
+    public void subtractQuantities(Map<Long, Integer> quantities) {
+        for (Map.Entry<Long, Integer> quantity : quantities.entrySet()) {
+            Long id = quantity.getKey();
+            Optional<Product> optionalProduct = productDao.get(id);
+            if(optionalProduct.isEmpty()) {
+                continue;
+            }
+            Product product = optionalProduct.get();
+            product.setAvailableQuantity(product.getAvailableQuantity() - quantity.getValue());
+            productDao.update(id, product);
+        }
     }
 }

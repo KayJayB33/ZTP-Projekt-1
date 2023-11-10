@@ -51,6 +51,7 @@ public class OrderService {
         order.setOrderedProducts(quantities);
         order.setPrice(calculateOrderPrice(quantities));
         orderDao.save(order);
+        productService.subtractQuantities(quantities);
     }
 
     private BigDecimal calculateOrderPrice(Map<Long, Integer> quantities) {
