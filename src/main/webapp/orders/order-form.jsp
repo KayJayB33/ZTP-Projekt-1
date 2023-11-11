@@ -2,6 +2,20 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <html>
+<script>
+    function checkDeliveryType() {
+        const selectBox = document.getElementById("delivery-type");
+        const selected = selectBox.value;
+        const parcelLockerFieldset = document.getElementById("parcel-locker-fieldset");
+        if (selected === 'parcel-delivery') {
+            parcelLockerFieldset.style.display = "block";
+        } else {
+            parcelLockerFieldset.style.display = "none";
+        }
+    }
+    window.onload = checkDeliveryType
+</script>
+
 <head>
     <title>System Zarządzania Zamówieniami i Produktami</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -29,12 +43,25 @@
                     </caption>
 
                     <fieldset class="form-group">
-                        <label>Adresat</label> <input type="text" value="<c:out value='${order.deliveryStrategy.addressee}' />" class="form-control" name="addressee" required="required">
+                        <label for="delivery-type">Sposób dostawy</label>
+                        <select id="delivery-type" name="delivery-type" class="form-control" required="required" onchange="checkDeliveryType()">
+                            <option value="post-delivery">Poczta Polska</option>
+                            <option value="parcel-delivery">Paczkomat</option>
+                        </select>
                     </fieldset>
 
                     <fieldset class="form-group">
-                        <label>Adres</label> <input type="text" value="<c:out value='${order.deliveryStrategy.address}' />" class="form-control" name="address" required="required">
+                        <label>Adresat</label> <input type="text" class="form-control" name="addressee" required="required">
                     </fieldset>
+
+                    <fieldset class="form-group">
+                        <label>Adres</label> <input type="text" class="form-control" name="address" required="required">
+                    </fieldset>
+
+                    <fieldset class="form-group" id="parcel-locker-fieldset">
+                        <label>Paczkomat</label> <input type="text" class="form-control" name="parcel-locker-id">
+                    </fieldset>
+
 
                     <table class="table table-bordered">
                         <thead>

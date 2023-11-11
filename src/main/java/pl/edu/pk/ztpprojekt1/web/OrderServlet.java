@@ -62,12 +62,14 @@ public class OrderServlet extends HttpServlet {
 
         String addressee = req.getParameter("addressee");
         String address = req.getParameter("address");
+        String deliveryType = req.getParameter("delivery-type");
+        String parcelLockerId = req.getParameter("parcel-locker-id");
         List<Product> products = productService.getAll();
         Map<Long, String> productsQuantities = new HashMap<>(products.size());
         for (Product product : products) {
             productsQuantities.put(product.getId(), req.getParameter(product.getId() + "-quantity"));
         }
-        orderService.save(new String[]{addressee, address}, productsQuantities);
+        orderService.save(new String[]{addressee, address, deliveryType, parcelLockerId}, productsQuantities);
         resp.sendRedirect("/orders");
     }
 

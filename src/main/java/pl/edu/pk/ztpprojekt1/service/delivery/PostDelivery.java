@@ -1,6 +1,8 @@
 package pl.edu.pk.ztpprojekt1.service.delivery;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import pl.edu.pk.ztpprojekt1.model.DeliveryStatus;
 
 import java.util.Objects;
@@ -13,6 +15,7 @@ public class PostDelivery implements DeliveryStrategy {
     private String address;
     @JsonProperty("delivery_status")
     private DeliveryStatus deliveryStatus;
+    private static final Logger logger = LogManager.getLogger(DeliveryStrategy.class);
 
     public String getAddressee() {
         return addressee;
@@ -48,6 +51,7 @@ public class PostDelivery implements DeliveryStrategy {
     public boolean send() {
         // wysyłanie danych do API systemu poczty polskiej w celu zarejestrowania przesyłki
         deliveryStatus = DeliveryStatus.SENT;
+        logger.info(String.format("Order sent to: %s, %s", addressee, address));
         return true;
     }
 

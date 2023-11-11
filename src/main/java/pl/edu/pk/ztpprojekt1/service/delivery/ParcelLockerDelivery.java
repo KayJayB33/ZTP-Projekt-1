@@ -1,6 +1,8 @@
 package pl.edu.pk.ztpprojekt1.service.delivery;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import pl.edu.pk.ztpprojekt1.model.DeliveryStatus;
 
 import java.util.Objects;
@@ -15,6 +17,7 @@ public class ParcelLockerDelivery implements DeliveryStrategy {
     private String parcelLockerId;
     @JsonProperty("delivery_status")
     private DeliveryStatus deliveryStatus;
+    private static final Logger logger = LogManager.getLogger(DeliveryStrategy.class);
 
     public ParcelLockerDelivery(String addressee, String address, String parcelLockerId) {
         this();
@@ -68,6 +71,7 @@ public class ParcelLockerDelivery implements DeliveryStrategy {
     public boolean send() {
         // wysyłanie danych do API systemu obsługi paczkomatu w celu zarejestrowania przesyłki
         deliveryStatus = DeliveryStatus.SENT;
+        logger.info(String.format("Order sent to: %s, %s, parcel locker %s", addressee, address, parcelLockerId));
         return true;
     }
 
