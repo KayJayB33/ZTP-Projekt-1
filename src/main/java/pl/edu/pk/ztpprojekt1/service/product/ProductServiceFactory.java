@@ -5,11 +5,16 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.pk.ztpprojekt1.dao.ProductDao;
+import pl.edu.pk.ztpprojekt1.service.order.OrderService;
 import pl.edu.pk.ztpprojekt1.util.JsonFileHandler;
 
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Fabryka dla klasy {@link ProductService}.
+ * Tworzy instancję przy pierwszym wywołaniu i zwraca ją z każdym kolejnym.
+ */
 public class ProductServiceFactory {
     private static final String PRODUCTS_JSON_FILEPATH = "data/products.json";
     private static final Logger logger = LogManager.getLogger(ProductServiceFactory.class);

@@ -6,7 +6,7 @@ import pl.edu.pk.ztpprojekt1.model.DeliveryStatus;
 import java.util.Objects;
 
 /**
- * Klasa reprezentująca strategię wysłania zamówienia poprzez Pocztę Polską.
+ * Klasa reprezentująca strategię wysłania zamówienia poprzez Pocztę Polską
  */
 public class PostDelivery implements DeliveryStrategy {
     private String addressee;

@@ -8,6 +8,9 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 import java.math.BigDecimal;
 
+/**
+ * Serializer dla pola o typie BigDecimal, który docelowo reprezentuje cenę/walutę.
+ */
 public class MoneySerializer extends JsonSerializer<BigDecimal> {
     @Override
     public void serialize(BigDecimal value, JsonGenerator jgen, SerializerProvider provider) throws IOException,

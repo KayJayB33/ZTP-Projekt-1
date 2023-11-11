@@ -1,31 +1,29 @@
 package pl.edu.pk.ztpprojekt1.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import pl.edu.pk.ztpprojekt1.dao.OrderDao;
 import pl.edu.pk.ztpprojekt1.model.Order;
 import pl.edu.pk.ztpprojekt1.model.Product;
 import pl.edu.pk.ztpprojekt1.service.order.OrderService;
 import pl.edu.pk.ztpprojekt1.service.order.OrderServiceFactory;
-import pl.edu.pk.ztpprojekt1.service.order.OrderValidator;
 import pl.edu.pk.ztpprojekt1.service.product.ProductService;
 import pl.edu.pk.ztpprojekt1.service.product.ProductServiceFactory;
-import pl.edu.pk.ztpprojekt1.util.JsonFileHandler;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Servlet odpowiedzialny za obsługę zamówień.
+ * W przypadku zapytań GET przekierowuje do listy zamówień lub formularza
+ * nowego zamówienia.
+ * W przypadku zapytania POST w zaleźności od ścieżki zapytania tworzy nowe zamówienie
+ * lub wysyła zamówienie.
+ */
 @WebServlet(urlPatterns = {"/orders", "/orders/create", "/orders/send"})
 public class OrderServlet extends HttpServlet {
     private OrderService orderService;
@@ -55,7 +53,7 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(req.getServletPath().equals("/orders/send")) {
+        if (req.getServletPath().equals("/orders/send")) {
             String uuid = req.getParameter("id");
             orderService.send(uuid);
             resp.sendRedirect("/orders");
@@ -66,7 +64,7 @@ public class OrderServlet extends HttpServlet {
         String address = req.getParameter("address");
         List<Product> products = productService.getAll();
         Map<Long, String> productsQuantities = new HashMap<>(products.size());
-        for(Product product : products) {
+        for (Product product : products) {
             productsQuantities.put(product.getId(), req.getParameter(product.getId() + "-quantity"));
         }
         orderService.save(new String[]{addressee, address}, productsQuantities);

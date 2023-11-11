@@ -2,7 +2,6 @@ package pl.edu.pk.ztpprojekt1.service.order;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.pk.ztpprojekt1.dao.OrderDao;
@@ -11,13 +10,17 @@ import pl.edu.pk.ztpprojekt1.util.JsonFileHandler;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Fabryka dla klasy {@link OrderService}.
+ * Tworzy instancję przy pierwszym wywołaniu i zwraca ją z każdym kolejnym.
+ */
 public class OrderServiceFactory {
     private static OrderService orderService;
     private static final String ORDERS_JSON_FILEPATH = "data/orders.json";
     private static final Logger logger = LogManager.getLogger(OrderServiceFactory.class);
 
     public static OrderService getInstance() {
-        if(orderService != null) {
+        if (orderService != null) {
             return orderService;
         }
 

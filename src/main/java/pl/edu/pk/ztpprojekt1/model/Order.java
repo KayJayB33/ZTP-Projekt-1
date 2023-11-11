@@ -1,10 +1,7 @@
 package pl.edu.pk.ztpprojekt1.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.MapDeserializer;
-import com.fasterxml.jackson.databind.ser.std.MapSerializer;
 import pl.edu.pk.ztpprojekt1.service.delivery.DeliveryStrategy;
 import pl.edu.pk.ztpprojekt1.util.MoneySerializer;
 
@@ -14,6 +11,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Klasa reprezentująca zamówienie
+ */
 public class Order {
     private final UUID uuid;
     private final Instant createdOn;

@@ -1,14 +1,15 @@
 package pl.edu.pk.ztpprojekt1.model;
 
-import com.fasterxml.jackson.annotation.JsonKey;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import pl.edu.pk.ztpprojekt1.util.MoneySerializer;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * Klasa reprezentująca produkt
+ */
 public class Product {
     private static long counter = 1L;
     private final long id;

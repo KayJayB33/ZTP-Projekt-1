@@ -2,12 +2,15 @@ package pl.edu.pk.ztpprojekt1.service.product;
 
 import pl.edu.pk.ztpprojekt1.dao.ProductDao;
 import pl.edu.pk.ztpprojekt1.model.Product;
-import pl.edu.pk.ztpprojekt1.service.validator.Validator;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Klasa dla logiki biznesowej dla zamówienia.
+ * Pomost pomiędzy wyświetlaniem a dostępem do danych.
+ */
 public class ProductService {
     private final ProductDao productDao;
     private final ProductValidator validator;
@@ -43,7 +46,7 @@ public class ProductService {
         for (Map.Entry<Long, Integer> quantity : quantities.entrySet()) {
             Long id = quantity.getKey();
             Optional<Product> optionalProduct = productDao.get(id);
-            if(optionalProduct.isEmpty()) {
+            if (optionalProduct.isEmpty()) {
                 continue;
             }
             Product product = optionalProduct.get();

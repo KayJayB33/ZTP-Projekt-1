@@ -6,7 +6,7 @@ import pl.edu.pk.ztpprojekt1.model.DeliveryStatus;
 import java.util.Objects;
 
 /**
- * Klasa reprezentująca strategię wysłania zamówienia poprzez paczkomaty.
+ * Klasa reprezentująca strategię wysłania zamówienia poprzez paczkomaty
  */
 public class ParcelLockerDelivery implements DeliveryStrategy {
     private String addressee;

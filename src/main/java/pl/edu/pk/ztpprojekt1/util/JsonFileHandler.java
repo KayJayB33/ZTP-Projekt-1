@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * Klasa wspomagająca odpowiedzialna za utworzenie pliku JSON dla danych.
+ */
 public class JsonFileHandler {
     public static void createFileIfNotExists(File jsonFile) throws IOException {
         if(jsonFile.exists()) {

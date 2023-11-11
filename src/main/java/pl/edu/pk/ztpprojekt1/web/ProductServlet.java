@@ -1,25 +1,26 @@
 package pl.edu.pk.ztpprojekt1.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import pl.edu.pk.ztpprojekt1.dao.ProductDao;
 import pl.edu.pk.ztpprojekt1.model.Product;
 import pl.edu.pk.ztpprojekt1.service.product.ProductService;
 import pl.edu.pk.ztpprojekt1.service.product.ProductServiceFactory;
-import pl.edu.pk.ztpprojekt1.service.product.ProductValidator;
-import pl.edu.pk.ztpprojekt1.util.JsonFileHandler;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Servlet odpowiedzialny za obsługę produktów.
+ * W przypadku zapytań GET przekierowuje do listy produktów lub formularza
+ * nowego produktu/edycji produktu.
+ * W przypadku zapytania POST w zaleźności od ścieżki zapytania tworzy nowy produkt, usuwa wskazany produkt
+ * lub go aktualizuje.
+ * Ze względu na specyfikę przeglądarki internetowej ta wysyła zapytania tylko GET lub w przypadku formularzy POST.
+ * Stąd zostały zaimplementowane metody dla zapytań DELETE oraz PUT i wywołane również dla zapytań GET/POST.
+ */
 @WebServlet(urlPatterns = {"/products", "/products/create", "/products/update", "/products/delete"})
 public class ProductServlet extends HttpServlet {
     private ProductService productService;
